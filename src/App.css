@@ -247,4 +247,137 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+/* 모바일 입력 필드 (숨김) */
+.mobile-input {
+  position: absolute;
+  top: -9999px; /* 화면 밖으로 숨김 */
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  z-index: -1;
+}
+
+/* 모바일용 키보드 안내 */
+.mobile-keyboard-guide {
+  margin: 1.5rem 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.keyboard-button {
+  background-color: #3498db;
+  color: white;
+  font-weight: bold;
+  padding: 12px 24px;
+  border-radius: 30px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 1rem;
+}
+
+.keyboard-button:hover, .keyboard-button:active {
+  background-color: #2980b9;
+  transform: scale(1.05);
+}
+
+.mobile-guide-text {
+  margin-top: 0.75rem;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+/* 모바일 반응형 디자인 */
+@media (max-width: 768px) {
+  .app-container {
+    padding: 1rem;
+    justify-content: flex-start;
+    padding-top: 3rem;
+  }
+  
+  .main-title {
+    font-size: 1.8rem;
+  }
+  
+  .subtitle {
+    font-size: 1rem;
+  }
+  
+  .game-area {
+    height: 14rem;
+  }
+  
+  .key-display {
+    font-size: 5rem;
+  }
+  
+  .vehicle-image {
+    height: 6rem;
+    max-width: 120px;
+  }
+  
+  .instruction-container {
+    margin-top: 1.5rem;
+  }
+  
+  .instruction-title {
+    font-size: 1.3rem;
+  }
+  
+  .instruction-item {
+    font-size: 0.9rem;
+  }
+}
+
+/* 더 작은 모바일 화면 */
+@media (max-width: 480px) {
+  .app-container {
+    padding-top: 2rem;
+  }
+  
+  .main-title {
+    font-size: 1.5rem;
+  }
+  
+  .subtitle {
+    font-size: 0.9rem;
+  }
+  
+  .game-area {
+    height: 12rem;
+  }
+  
+  .key-display {
+    font-size: 4rem;
+  }
+  
+  .vehicle-image {
+    height: 5rem;
+    max-width: 100px;
+  }
+  
+  .vehicle-name {
+    font-size: 0.75rem;
+  }
+  
+  .instruction-container {
+    padding: 0.75rem;
+  }
+  
+  .instruction-title {
+    font-size: 1.1rem;
+  }
+  
+  .instruction-item {
+    font-size: 0.8rem;
+  }
+  
+  .instruction-badge {
+    padding: 0.15rem 0.35rem;
+    font-size: 0.8rem;
+  }
 } 
