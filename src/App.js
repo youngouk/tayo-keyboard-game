@@ -6,6 +6,14 @@ import tayoImage from './images/tayo.png';
 import rogiImage from './images/rogi.png';
 import raniImage from './images/rani.png';
 import ganiImage from './images/gani.png';
+// 새로 추가된 이미지들
+import pporopoImage from './images/ppororo.png';
+import pporopoFriendsImage from './images/ppororo_friends.png';
+import patImage from './images/Pat.webp';
+import lopiImage from './images/lopi.webp';
+import crongImage from './images/Crong.webp';
+import aliceImage from './images/alice.jpeg';
+import frankImage from './images/frank.jpeg';
 
 /**
  * 알파벳과 숫자 키보드 게임 컴포넌트
@@ -19,6 +27,7 @@ const App = () => {
   const [animation, setAnimation] = useState(false);     // 애니메이션 상태
   const [backgroundColor, setBackgroundColor] = useState('#f8f9fa'); // 배경색
   const [currentVehicle, setCurrentVehicle] = useState('bus-tayo'); // 현재 차량 타입
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth); // 화면 너비
 
   /**
    * 문자가 알파벳 또는 숫자인지 확인하는 함수
@@ -60,9 +69,25 @@ const App = () => {
    * @returns {string} - 차량 타입 식별자
    */
   const selectRandomVehicle = () => {
-    const vehicles = ['bus-tayo', 'bus-rogi', 'bus-rani', 'bus-gani'];
+    const vehicles = [
+      'bus-tayo', 'bus-rogi', 'bus-rani', 'bus-gani',
+      'ppororo', 'ppororo-friends', 'pat', 'lopi', 
+      'crong', 'alice', 'frank'
+    ];
     return vehicles[Math.floor(Math.random() * vehicles.length)];
   };
+
+  // 화면 크기 변경 감지하기
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   // 키보드 이벤트 핸들러 설정 (컴포넌트 마운트 시 1회만 실행)
   useEffect(() => {
@@ -89,7 +114,12 @@ const App = () => {
         setKey(null);
         setShowVehicle(true);
         setCurrentVehicle(selectRandomVehicle());
-        setVehiclePosition(prevPosition => (prevPosition + 100) % 800);
+        
+        // 화면 중앙을 기준으로 이미지 위치 설정
+        const centerOffset = windowWidth / 2;
+        const randomPosition = Math.floor(Math.random() * 500) - 250; // -250에서 250 사이의 무작위 값
+        setVehiclePosition(centerOffset + randomPosition);
+        
         setAnimation(true);
         setTimeout(() => setAnimation(false), 500);
       }
@@ -100,7 +130,7 @@ const App = () => {
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, []);
+  }, [windowWidth]);
 
   /**
    * 현재 차량 타입에 맞는 UI를 렌더링하는 함수
@@ -158,6 +188,90 @@ const App = () => {
             <p className="vehicle-name">가니</p>
           </div>
         );
+      case 'ppororo':
+        return (
+          <div className="vehicle">
+            <img 
+              src={pporopoImage} 
+              alt="뽀로로" 
+              className="vehicle-image"
+              style={{ transform: `scale(${scale})` }}
+            />
+            <p className="vehicle-name">뽀로로</p>
+          </div>
+        );
+      case 'ppororo-friends':
+        return (
+          <div className="vehicle">
+            <img 
+              src={pporopoFriendsImage} 
+              alt="뽀로로와 친구들" 
+              className="vehicle-image"
+              style={{ transform: `scale(${scale})` }}
+            />
+            <p className="vehicle-name">뽀로로와 친구들</p>
+          </div>
+        );
+      case 'pat':
+        return (
+          <div className="vehicle">
+            <img 
+              src={patImage} 
+              alt="패트" 
+              className="vehicle-image"
+              style={{ transform: `scale(${scale})` }}
+            />
+            <p className="vehicle-name">패트</p>
+          </div>
+        );
+      case 'lopi':
+        return (
+          <div className="vehicle">
+            <img 
+              src={lopiImage} 
+              alt="루피" 
+              className="vehicle-image"
+              style={{ transform: `scale(${scale})` }}
+            />
+            <p className="vehicle-name">루피</p>
+          </div>
+        );
+      case 'crong':
+        return (
+          <div className="vehicle">
+            <img 
+              src={crongImage} 
+              alt="크롱" 
+              className="vehicle-image"
+              style={{ transform: `scale(${scale})` }}
+            />
+            <p className="vehicle-name">크롱</p>
+          </div>
+        );
+      case 'alice':
+        return (
+          <div className="vehicle">
+            <img 
+              src={aliceImage} 
+              alt="앨리스" 
+              className="vehicle-image"
+              style={{ transform: `scale(${scale})` }}
+            />
+            <p className="vehicle-name">앨리스</p>
+          </div>
+        );
+      case 'frank':
+        return (
+          <div className="vehicle">
+            <img 
+              src={frankImage} 
+              alt="프랭크" 
+              className="vehicle-image"
+              style={{ transform: `scale(${scale})` }}
+            />
+            <p className="vehicle-name">프랭크</p>
+          </div>
+        );
       default:
         return (
           <div className="vehicle">
@@ -197,7 +311,10 @@ const App = () => {
         {showVehicle && (
           <div 
             className={`vehicle-display ${animation ? 'animated' : ''}`}
-            style={{ left: `${vehiclePosition}px` }}
+            style={{ 
+              left: `${vehiclePosition}px`,
+              transform: `translateX(-50%)` // 중앙 정렬을 위한 변환 추가
+            }}
           >
             {renderVehicle()}
           </div>
@@ -214,7 +331,7 @@ const App = () => {
           </li>
           <li className="instruction-item">
             <span className="instruction-badge green">다른 키</span>
-            <span className="instruction-text">여러 종류의 버스가 나와요!</span>
+            <span className="instruction-text">타요와 뽀로로 친구들이 나와요!</span>
           </li>
         </ul>
       </div>
